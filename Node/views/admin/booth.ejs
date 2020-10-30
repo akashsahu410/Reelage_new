@@ -1,0 +1,97 @@
+<% include header %>
+<% include sidebar %>
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
+            <!-- Bread crumb -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">Dashborad</h3> </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active"> Dashborad</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- End Bread crumb -->
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <!-- Start Page Content -->
+               
+                <div class="row">
+                
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-title">
+                                <h4>Booth Dashborad</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="">
+                                        <thead>
+                                            <tr>
+                                            <span><% console.log(cur_ques) %> </span>
+                                            <% for(var k = 1; k <= data.length / 25 ; k++) { %>
+                                            
+                                                <th>Booth</th>
+                                                <th>Status</th>
+                                            <% } %> 
+                                            </tr>
+                                        </thead>
+                                        <% 
+                                            data.sort((a,b) => a.booth_id - b.booth_id)
+                                            for(var i = 0 ; i < 25 ; i++) { 
+                                            %>
+                                            
+                                            <tr>
+                                                <% for(var j = 0 ; j < data.length ; j=j+25) { 
+                                                    
+                                                    %>
+                                                <td><%= data[i+j].booth_id %></td>
+                                               <!--  <td><%= data[i+j].question[cur_ques].status %></td> -->
+                                                    <%
+                                                 if(data[i+j].question[cur_ques].status){
+                                                     %>
+                                                        <td>YES</td>
+                                                <% }
+                                                    else{
+                                                         %>
+                                                        <td>NO</td>
+                                                <% } %>
+
+
+
+                                                
+
+                                            <% } %>
+                                        </tr>
+                                        
+                                        <% } %>
+                                        <!-- <%  
+                                        for (let i=1 ; i <= 25 ; i++){  %>
+                                            <tr>
+                                                <td> <%=  i %></td>
+                                                <td>YES</td>
+                                                <td> <%=  i+25 %></td>
+                                                <td>YES</td>
+                                                <td> <%=  i+50 %></td>
+                                                <td>YES</td>
+                                                <td> <%=  i+75 %></td>
+                                                <td>YES</td>
+                                            </tr>
+                                        <% 
+                                        }
+                                        %> -->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- End PAge Content -->
+            </div>
+            <!-- End Container fluid  -->
+            <% include footer %>

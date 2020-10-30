@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>Reelage</title>
+<!--FAVICON-->
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+    <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
+    <!--menu-maker-->
+<link rel="stylesheet" type="text/css" href="%PUBLIC_URL%/css/menumaker.css">
+<!--font-awesome-->
+<link href="%PUBLIC_URL%/css/font-awesome.css" rel="stylesheet">
+<!--select2-->
+<link href="%PUBLIC_URL%/css/select2.css" rel="stylesheet">
+<!--fonts-->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet"> 
+<!-- Bootstrap -->
+<link href="%PUBLIC_URL%/css/bootstrap.min.css" rel="stylesheet">  
+<link rel="stylesheet" href="%PUBLIC_URL%/css/animate.css" />
+<!---Util Crousel-->
+<link rel="stylesheet" href="%PUBLIC_URL%/utilcarousel-files/utilcarousel/util.carousel.css" />
+<link rel="stylesheet" href="%PUBLIC_URL%/utilcarousel-files/utilcarousel/util.carousel.skins.css" />
+<link rel="stylesheet" href="%PUBLIC_URL%/utilcarousel-files/magnific-popup/magnific-popup.css" />
+
+<!--style-->
+<link href="%PUBLIC_URL%/css/style.css" rel="stylesheet">
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+   
+
+   <div id="root"></div>
+
+<!-- share modal -->
+<!-- <div className="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div className="modal-dialog shareMdl-dialog" role="document">
+    <div className="modal-content">
+      <div className="modal-header">
+        <button type="button" className="close closemodal" data-dismiss="modal">&times;</button>
+        <h4 className="modal-title">Share This Page</h4>
+      </div>
+      <div className="modal-body shareMdl-body">
+        <div className="shareMdl-sldr">
+          <div id="share1" className="util-carousel">
+            <div className="item shareMdl-item">
+              <div className="shareMdl-list">
+                <ul>
+                  <li className="fb-share">
+                    <a target="_blank" href="">
+                      <i className="fa fa-facebook"></i>
+                      <span>Facebook</span>
+                    </a>
+                  </li>
+                  <li className="twtr-share">
+                    <a target="_blank" href="">
+                      <i className="fa fa-twitter"></i>
+                      <span>Twitter</span>
+                    </a>
+                  </li>
+                  
+                  <li className="pntrst-share">
+                    <a target="_blank" href="">
+                      <i className="fa fa-pinterest"></i>
+                      <span>Pinterest</span>
+                    </a>
+                  </li>
+                  <li className="ins-share">
+                    <a target="_blank" href="">
+                      <i className="fa fa-instagram"></i>
+                      <span>Instagram</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="item shareMdl-item">
+              <div className="shareMdl-list">
+                <ul>
+                
+                  <li className="tmblr-share">
+                    <a target="_blank" href="">
+                      <i className="fa fa-tumblr"></i>
+                      <span>Tumblr</span>
+                    </a>
+                  </li>
+                  <li className="lnkdn-share">
+                    <a target="_blank" href="">
+                      <i className="fa fa-linkedin"></i>
+                      <span>Linkedin</span>
+                    </a>
+                  </li>
+                  <li className="email-share">
+                    <a target="_blank" href="">
+                      <i className="fa fa-envelope-o"></i>
+                      <span>Email</span>
+                    </a>
+                  </li>
+                
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- Upload Photo modal -->
+<!-- <div className="modal fade" id="uploadpicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div className="modal-dialog shareMdl-dialog" role="document">
+    <div className="modal-content">
+      <div className="modal-header">
+        <button type="button" className="close closemodal" data-dismiss="modal">&times;</button>
+        <h4 className="modal-title">Upload Image</h4>
+      </div>
+      <div className="modal-body uploadMdl-body">
+        <div className="upload-section">
+                    <label className="upload-image" for="upload-image-one">
+                         <input type="file" id="upload-image-one">
+                    </label>
+                     <a className="add-more" href="#">
+                            <span className="uplod-icn">
+                                <i className="fa fa-cloud-upload" aria-hidden="true"></i>
+                            </span>
+                         <span className="upload-img-hdg">
+                            Upload Image
+                         </span>   
+                     </a>  
+                     <div className="upload-img-icn">
+                         <a className="cmmn-btn fllw" href="#">Upload</a>
+                         <a className="cmmn-btn msg" href="#">Cancel</a>
+                     </div>
+                </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+   <!-- Upload Video modal -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  <script src="js/menumaker.js"></script>
+  <script type="text/javascript">
+  $("#cssmenu").menumaker({
+    title: "Menu",
+    format: "multitoggle"
+  });
+  </script>
+  <script>
+     function scrollToId(id, offset=0) {
+         $('html, body').animate({
+          scrollTop: ($("#"+id).offset().top)+offset
+        }, 1000);
+      }
+  </script>
+  <script src="/utilcarousel-files/utilcarousel/jquery.utilcarousel.min.js"></script> 
+  <script src="/utilcarousel-files/magnific-popup/jquery.magnific-popup.js"></script>
+  <script>
+    $(function() {
+      $('.roundFinalists').utilCarousel({
+        breakPoints: [
+          [5000, 3],
+          [1199, 3],
+          [991, 2],
+          [767, 1]
+        ],
+        navigationText: ['<i class="icon-left-open-big"></i>', '<i class=" icon-right-open-big"></i>'],
+        navigation: true,
+        rewind: true,
+        autoPlay: false,
+        interval: 3000,
+        pagination: false
+      });
+      $('#share1').utilCarousel({
+        showItems : 1,
+        breakPoints : [[1920, 1]],
+        autoPlay : true,
+        interval : 30000,
+        navigationText : ['<i class="icon-left-open-big"></i>', '<i class=" icon-right-open-big"></i>'],
+        navigation : true,
+        pagination: false,
+        rewind : true
+      });
+      $('.roundFinalistss').utilCarousel({
+        breakPoints: [
+          [5000, 2],
+          [1199, 2],
+          [991, 2],
+          [767, 1]
+        ],
+        navigationText: ['<i class="icon-left-open-big"></i>', '<i class=" icon-right-open-big"></i>'],
+        navigation: true,
+        rewind: true,
+        autoPlay: false,
+        interval: 3000,
+        pagination: false
+      });
+      $('#roundComing').utilCarousel({
+        breakPoints: [
+          [5000, 3],
+          [1199, 3],
+          [991, 2],
+          [767, 1]
+        ],
+        navigationText: ['<i class="icon-left-open-big"></i>', '<i class=" icon-right-open-big"></i>'],
+        navigation: true,
+        rewind: true,
+        autoPlay: false,
+        interval: 3000,
+        pagination: false
+      });
+      $('#myHighlights').utilCarousel({
+        breakPoints: [
+          [5000, 3],
+          [1199, 3],
+          [991, 2],
+          [767, 1]
+        ],
+        navigationText: ['<i class="icon-left-open-big"></i>', '<i class=" icon-right-open-big"></i>'],
+        navigation: true,
+        rewind: true,
+        autoPlay: false,
+        interval: 3000,
+        pagination: false
+      });
+      $('#CompetitorHighlights').utilCarousel({
+        breakPoints: [
+          [5000, 3],
+          [1199, 3],
+          [991, 2],
+          [767, 1]
+        ],
+        navigationText: ['<i class="icon-left-open-big"></i>', '<i class=" icon-right-open-big"></i>'],
+        navigation: true,
+        rewind: true,
+        autoPlay: false,
+        interval: 3000,
+        pagination: false
+      });
+    });
+  </script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+  <script>
+      $(document).ready(function(){
+    //FANCYBOX
+    //https://github.com/fancyapps/fancyBox
+    $(".fancybox").fancybox({
+        openEffect: "none",
+        closeEffect: "none"
+    });
+    });
+  </script>
+  </body>
+</html>

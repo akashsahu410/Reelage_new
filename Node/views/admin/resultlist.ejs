@@ -1,0 +1,66 @@
+<% include header %>
+   
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
+            <!-- Bread crumb -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">Answer</h3> </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Answer</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- End Bread crumb -->
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <!-- Start Page Content -->
+               
+                <div class="row">
+                
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-title">
+                                <h4>Answer List </h4>
+                            
+                            </div>
+                            <div class="card-body">
+                                <a class="btn btn-success" href="http://192.168.1.7:3000/admin/snapshot.html?uid=<%= ids %>">Images</a>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>S.no</th>
+                                                <th>Question</th>
+                                                <th>Answer By Student</th>
+                                                <th>Correct Answer</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for(var i=1; i < data.length; i++) { %>
+                                                <tr>
+                                                    <td><%= i %></td>
+                                                    <td><span><%- data[i].title %></span></td>
+                                                  
+                                                    <td><span class="<%= (data[i].answer==data[i].rightAnswer)?'btn btn-success':'btn btn-danger' %>"> <%= data[i].answer %></span></td>
+                                                    <td><span class="btn btn-success"><%= data[i].rightAnswer %></span></td>
+                                                    
+                                                </tr>
+                
+                                                <% }; %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- End PAge Content -->
+            </div>
+            <!-- End Container fluid  -->
+            <% include footer %>

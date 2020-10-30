@@ -1,0 +1,88 @@
+<% include header %>
+<% include sidebar %>
+    
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
+            <!-- Bread crumb -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">Dashborad</h3> </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active"> Dashborad</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- End Bread crumb -->
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <!-- Start Page Content -->
+               
+                <div class="row">
+                
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-title">
+                                <h4>Election Dashborad</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>District</th>
+                                                <th>One</th>
+                                                <th>Two</th>
+                                                <th>Three</th>
+                                                <th>Four</th>
+                                                <th>Five</th>
+                                                <th>Six</th>
+                                                <th>Seven</th>
+                                                <th>Eight</th>
+                                                <th>Nine</th>
+                                                <th>Ten</th>
+                                                <th>Eleven</th>
+                                                <th>Twelve</th>
+                                                <th>Thirteen</th>
+                                                <th>Fourteen</th>
+                                                <th>Fiveteen</th>
+                                                <th>Sixteen</th>
+                                                <th>Seventeen</th>
+                                                <th>Eightteen</th>
+                                                <th>Nineteen</th>
+                                                
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% 
+                                            data.map(x => {  
+                                                %>
+                                                <tr>
+                                                    <td><a href="http://localhost:1000/admin/ac?disId=<%= x.dis_id %>"><%= x.name %></a></td>
+                                                   
+                                                   <%  for( var y = 1 ; y <= 19 ; y++) {
+                                                    
+                                                    %>
+                                                       
+                                                <td><%= x.question[y].count %> </td>
+                                              
+                                                <% } %> 
+                                                </tr>
+                
+                                                <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- End PAge Content -->
+            </div>
+            <!-- End Container fluid  -->
+            <% include footer %>

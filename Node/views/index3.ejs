@@ -1,0 +1,16 @@
+<div class="row">
+    <!-- Single Feature Start -->
+    <% for(var i=0; i < feature.length; i++) { %>
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="single-feature">
+                <i class="ti-user" aria-hidden="true"></i>
+                <h5>
+                    <%= feature[i].FEATURE_TITLE  %>
+                </h5>
+                <p>
+                    <%= feature[i].FEATURE_DES  %>
+                </p>
+            </div>
+        </div>
+        <% } %>
+</div>
