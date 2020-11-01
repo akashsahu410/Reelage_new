@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { Switch, Route, Redirect, Link } from "react-router-dom";
 import jwt from "jsonwebtoken";
+import queryString from 'query-string'
 import HeaderInn from "./header_in";
 import config from "./config.js";
 import Footer from "./footer";
@@ -47,27 +48,62 @@ class Profile extends React.Component {
     photos:"",
     video:"",
     events:"",
-    id:""
+    id:"",
+    name:"",
+    posts:"",
+    followers:"",
+    following:"",
+    banner_img:"",
+    user_img:""
   }
 
   componentDidMount() {
-    const decoded_id = jwt.verify(
-      localStorage.getItem("param"),
-      config.login_secret.key
-    );
-    this.setState({ id: decoded_id.param });
+    // const decoded_id = jwt.verify(
+    //   localStorage.getItem("param"),
+    //   config.login_secret.key
+    // );
+    let fetch_url = window.location.href;
+    let res = fetch_url.split("=");
+
+    let options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: res[1] }),
+      // body: JSON.stringify({ id: decoded_id.param }),
+    };
+    fetch("http://localhost:8080/fetchUserInfo", options)
+      .then((res) => {
+        console.log("response", res);
+        return res.json();
+      })
+      .then((data) => {
+        console.log("data", data.data);
+        this.setState({ id: res[1],name:data.data.name,followers:data.data.no_followers,following:data.data.no_following,user_img:data.data.user_img,
+        posts:data.data.no_post,banner_img:data.data.user_banner_img});
+      })
+      .catch((err) => {
+        console.log("error in fetch call", err);
+      });
+
+    // this.setState({ id: decoded_id.param });
+    
   }
   check = (e) => {
-    document.documentElement.scrollTop = 0;
-    this.props.history.push(`/profile/${e.target.name}`);
+    // document.documentElement.scrollTop = 0;
+    console.log("feth id",this.state)
+    this.props.history.push(`/profile/${e.target.name}?id=${this.state.id}`);
 
     let new_obj = {}
 
+    let tabs_arr = ['timeline','about','photos','video','events']
     for (var [key, value] of Object.entries(this.state)) {
       if(key === e.target.name){
         new_obj[key] = "active"
       }
-      else{
+      else if(tabs_arr.includes(key)){
         new_obj[key] = ""
       }
     }
@@ -89,12 +125,12 @@ class Profile extends React.Component {
                       <a
                         class="fancybox"
                         rel="ligthbox"
-                        href="/images/pro-cover.jpg"
+                        href={this.state.banner_img === "" ? "/images/pro-cover.jpg" : `http://localhost:8080/${this.state.banner_img}`}
                       >
                         <img
                           class="img-responsive"
                           alt=""
-                          src="/images/pro-cover.jpg"
+                          src={this.state.banner_img === "" ? "/images/pro-cover.jpg" : `http://localhost:8080/${this.state.banner_img}`}
                         />
                       </a>
                     </div>
@@ -110,22 +146,22 @@ class Profile extends React.Component {
                           <a
                             class="fancybox"
                             rel="ligthbox"
-                            href="/images/nora.jpg"
+                            href={this.state.user_img === "" ? "/images/nora.jpg" : `http://localhost:8080/${this.state.user_img}`}
                           >
                             <img
                               class="img-responsive"
                               alt=""
-                              src="/images/nora.jpg"
+                              src={this.state.user_img === "" ? "/images/nora.jpg" : `http://localhost:8080/${this.state.user_img}`}
                             />
                           </a>
                         </div>
                         <div class="prole-nam">
-                          <h4>Akash Sahu</h4>
+                          <h4>{this.state.name}</h4>
                           <div class="prf-fllw-dtl main">
                             <ul>
                               <li>
                                 <a href="#">
-                                  <span class="post-hd">886</span> Posts
+                                  <span class="post-hd">{this.state.posts}</span> Posts
                                 </a>
                               </li>
                               <li>
@@ -133,7 +169,7 @@ class Profile extends React.Component {
                               </li>
                               <li>
                                 <a href="#">
-                                  <span class="post-hd">20.1m</span> Followers
+                                  <span class="post-hd">{this.state.followers}</span> Followers
                                 </a>
                               </li>
                               <li>
@@ -141,7 +177,7 @@ class Profile extends React.Component {
                               </li>
                               <li>
                                 <a href="#">
-                                  <span class="post-hd">20</span> Following
+                                  <span class="post-hd">{this.state.following}</span> Following
                                 </a>
                               </li>
                             </ul>

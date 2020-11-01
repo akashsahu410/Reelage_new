@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route, Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import jwt from "jsonwebtoken";
+import queryString from 'query-string'
 import config from "./config.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,12 +41,16 @@ class Timeline extends React.Component {
     }
   };
 
-  componentDidMount() {
-    const decoded_id = jwt.verify(
-      localStorage.getItem("param"),
-      config.login_secret.key
-    );
-    this.setState({ id: decoded_id.param });
+  componentDidMount=()=> {
+    // const decoded_id = jwt.verify(
+    //   localStorage.getItem("param"),
+    //   config.login_secret.key
+    // );
+    const value=queryString.parse(this.props.location.search);
+    const id=value.id;
+    console.log('token id',id)//123
+    // this.setState({ id: decoded_id.param });
+    this.setState({ id: id });
   }
 
   onChangeHandler = (event) => {

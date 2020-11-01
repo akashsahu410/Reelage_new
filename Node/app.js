@@ -62,9 +62,9 @@ app.post("/registerform", async (req, res) => {
       no_post: "0",
       password: req.body.PASSWORD,
       total_competition: "0",
-      user_banner_img: "no_image",
-      user_img: "no_image",
-      user_status: "0",
+      user_banner_img: "",
+      user_img: "",
+      user_status: 1,
       verify_status: "0",
       about_me:""
     };
@@ -157,7 +157,6 @@ app.post("/showVideos", async (req, res) => {
   res.json({
     result,
   });
-  
 })
 
 // fetch the about me
@@ -195,9 +194,9 @@ app.post("/registerwithlogin", async (req, res) => {
       no_post: "0",
       password: req.body.PASSWORD,
       total_competition: "0",
-      user_banner_img: "no_image",
-      user_img: "no_image",
-      user_status: "0",
+      user_banner_img: "",
+      user_img: "",
+      user_status: 1,
       verify_status: "1",
       about_me:""
     };
@@ -254,7 +253,46 @@ app.post("/upload_post", async (req, res) => {
     });
 });
 
+// fetch account status
+app.post("/fetchAccountStatus", async (req, res, next) => {
+  const registerRef = db.collection("register");
+  const snapshot = await registerRef
+    .where("email", "==", req.body.LOGINEMAIL)
+    .get();
+ 
+    snapshot.forEach((doc) => {
+      console.log("inside fetch info ",doc.id, " => ", doc.data());
+      res.json({
+        account_status: doc.data().user_status,
+        id: doc.id
+      });
+});
+})
 
+// fetch user data
+app.post("/fetchUserInfo", async (req, res, next) => {
+  db.collection("register").doc(req.body.id)
+  .get()
+  .then((docRef) => {
+    console.log(docRef.data())
+    res.json({
+      data: docRef.data()
+    });
+  });
+  
+})
+
+// change the user status of account
+app.post("/changeAccountStatus", async (req, res, next) => {
+  const docRef = db.collection("register").doc(req.body.uId);
+
+  await docRef.update({
+    user_status: req.body.user_status,
+  });
+  res.json({
+    msg: "Account status changed successfully",
+  });
+});
 
 app.post("/loginform", async (req, res, next) => {
   const registerRef = db.collection("register");

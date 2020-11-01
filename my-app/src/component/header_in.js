@@ -2,6 +2,8 @@ import React from "react";
 import config from "./config.js";
 import { Redirect, Link } from "react-router-dom";
 import jwt from "jsonwebtoken";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 class HeaderInn extends React.Component {
   state = {
@@ -9,6 +11,8 @@ class HeaderInn extends React.Component {
     email: "",
     name: "",
     image: "",
+    account_status:1,
+    id:""
   };
 
   componentDidMount() {
@@ -36,11 +40,63 @@ class HeaderInn extends React.Component {
     } catch (err) {
       image = "images/prfle-img.jpg";
     }
-    this.setState({
-      email: decoded_email.email,
-      name: decoded_name.name,
-      image: image,
-    });
+
+
+    let options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({LOGINEMAIL:decoded_email.email}),
+    };
+    fetch(`http://localhost:8080/fetchAccountStatus`, options)
+      .then((res) => {
+        //console.log("response",res)
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data)
+        this.setState({
+          email: decoded_email.email,
+          name: decoded_name.name,
+          image: image,
+          account_status:data.account_status,
+          id:data.id
+        });
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  }
+
+  // change the account status to close or open
+  change_account_Status = ()=>{
+    let account_status = 0
+      if(this.state.account_status === 0){
+        account_status = 1
+      }
+      let options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({uId:this.state.id,user_status:account_status}),
+      };
+      fetch(`http://localhost:8080/changeAccountStatus`, options)
+        .then((res) => {
+          //console.log("response",res)
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data.msg)
+          alert(data.msg)
+          this.setState({"account_status":account_status})
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
   }
 
   // logout the profile
@@ -49,6 +105,23 @@ class HeaderInn extends React.Component {
     this.setState({ logout_flag: true });
   };
 
+  submit = () => {
+    confirmAlert({
+      title: 'Confirm to submit',
+      message: 'Are you sure to change the status of Account',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => this.change_account_Status()
+        },
+        {
+          label: 'No',
+          // onClick: () => alert('Click No')
+        }
+      ]
+    });
+  };
+ 
   render() {
     return (
       <div>
@@ -155,13 +228,13 @@ class HeaderInn extends React.Component {
                                       </a>
                                     </li>
                                     <li>
-                                      <a href="close-account.html">
+                                      <a href="javascript:void(0);" onClick={this.submit}>
                                         {/* <img src="images/wallet-icon.png"/> */}
                                         <i
                                           class="fa fa-times-circle-o"
                                           aria-hidden="true"
                                         ></i>
-                                        Close account
+                                        {this.state.account_status ? "Close account" : "Open account"}
                                       </a>
                                     </li>
                                     <li>

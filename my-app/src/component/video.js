@@ -1,17 +1,23 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Switch, Route, Redirect, Link } from "react-router-dom";
 import jwt from "jsonwebtoken";
+import queryString from 'query-string'
 import config from "./config.js";
+import Loading from "./loading";
 
 class Timeline extends React.Component {
   state = {
     fetchVideos: [],
   };
-  componentDidMount() {
-    const decoded_id = jwt.verify(
-      localStorage.getItem("param"),
-      config.login_secret.key
-    );
+  componentDidMount=()=> {
+    // const decoded_id = jwt.verify(
+    //   localStorage.getItem("param"),
+    //   config.login_secret.key
+    // );
+    console.log("query string",this.props.location.search)
+    const value=queryString.parse(this.props.location.search);
+    const id=value.id;
+    console.log('token id',id)//123
 
     let options = {
       method: "POST",
@@ -19,7 +25,8 @@ class Timeline extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: decoded_id.param }),
+      // body: JSON.stringify({ id: decoded_id.param }),
+      body: JSON.stringify({ id: id }),
     };
     fetch("http://localhost:8080/showVideos", options)
       .then((res) => {
@@ -46,6 +53,7 @@ class Timeline extends React.Component {
 	  }
     return (
       <div>
+        <Suspense fallback={Loading}>
         <section class="profile-sec wrapper pd-50">
           <div class="container">
             <div class="profile-abttbs">
@@ -125,6 +133,7 @@ class Timeline extends React.Component {
             </div>
           </div>
         </section>
+        </Suspense>
       </div>
     );
   }

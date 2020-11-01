@@ -118,7 +118,7 @@ class Login extends React.Component {
             console.log("payload", decoded.payload);
             this.setState(this.initialstate);
             toast(data.message);
-            this.props.history.push(`/profile`);
+            this.props.history.push(`/profile?id=${data.id}`);
           } else {
             toast(data.message);
           }
