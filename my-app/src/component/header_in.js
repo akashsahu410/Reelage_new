@@ -217,8 +217,8 @@ class HeaderInn extends React.Component {
                                         Events
                                       </a>
                                     </li>
-                                    <li>
-                                      <a href="change-password.html">
+                                    <Link to="/profile/change_password"><li>
+                                      <a href="javascript:void(0);">
                                         {/* <img src="images/wallet-icon.png"/> */}
                                         <i
                                           class="fa fa-key"
@@ -227,6 +227,7 @@ class HeaderInn extends React.Component {
                                         Change Password
                                       </a>
                                     </li>
+                                    </Link>
                                     <li>
                                       <a href="javascript:void(0);" onClick={this.submit}>
                                         {/* <img src="images/wallet-icon.png"/> */}

@@ -8,15 +8,15 @@ class Photos extends React.Component {
     fetchPhotos: [],
   };
   componentDidMount=()=> {
-    // const decoded_id = jwt.verify(
-    //   localStorage.getItem("param"),
-    //   config.login_secret.key
-    // );
+    const decoded_id = jwt.verify(
+      localStorage.getItem("param"),
+      config.login_secret.key
+    );
 
-    console.log("query string",this.props.location.search)
-    const value=queryString.parse(this.props.location.search);
-    const id=value.id;
-    console.log('token id',id)//123
+    // console.log("query string",this.props.location.search)
+    // const value=queryString.parse(this.props.location.search);
+    // const id=value.id;
+    // console.log('token id',id)//123
 
     // this.setState({ id: decoded_id.param });
     // this.setState({ id: id});
@@ -27,8 +27,8 @@ class Photos extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: id }),
-      // body: JSON.stringify({ id: decoded_id.param }),
+      // body: JSON.stringify({ id: id }),
+      body: JSON.stringify({ id: decoded_id.param }),
     };
     fetch("http://localhost:8080/showPhotos", options)
       .then((res) => {

@@ -118,7 +118,8 @@ class Login extends React.Component {
             console.log("payload", decoded.payload);
             this.setState(this.initialstate);
             toast(data.message);
-            this.props.history.push(`/profile?id=${data.id}`);
+            // this.props.history.push(`/profile?id=${data.id}`);
+            this.props.history.push(`/profile`);
           } else {
             toast(data.message);
           }
@@ -150,7 +151,7 @@ class Login extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({EMAIL:response.nt.Wt,NAME:response.nt.Ad,PASSWORD:"",IMAGE:response.profileObj.imageUrl}),
+      body: JSON.stringify({EMAIL:response.profileObj.email,NAME:response.profileObj.name,PASSWORD:"",IMAGE:response.profileObj.imageUrl}),
     }
       fetch(`http://localhost:8080/registerwithlogin`, options)
         .then((res) => {
@@ -160,14 +161,14 @@ class Login extends React.Component {
         .then((data) => {
           console.log("data caught",data)
           const token_email = jwt.sign(
-            { expiresInMinutes: 60, email: response.nt.Wt },
+            { expiresInMinutes: 60, email: response.profileObj.email },
             config.login_secret.key
           );
           localStorage.setItem("email", token_email);
 
 
           const token_name = jwt.sign(
-            { expiresInMinutes: 60, name: response.nt.Ad },
+            { expiresInMinutes: 60, name: response.profileObj.name },
             config.login_secret.key
           );
           localStorage.setItem("name", token_name);
@@ -178,9 +179,17 @@ class Login extends React.Component {
           );
           localStorage.setItem("image", token_image);
 
+          // set the document id
+          const token_id = jwt.sign(
+            { expiresInMinutes: 60, param: data.id },
+            config.login_secret.key
+          );
+          localStorage.setItem("param", token_id);
+          
           toast("Login with Google Successful");
           this.setState(this.initialstate);
           this.props.history.push(`/profile`);
+          // this.props.history.push(`/profile`);
         })
         .catch((err) => {
           console.log("error", err);

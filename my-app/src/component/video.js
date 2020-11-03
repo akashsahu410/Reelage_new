@@ -10,14 +10,14 @@ class Timeline extends React.Component {
     fetchVideos: [],
   };
   componentDidMount=()=> {
-    // const decoded_id = jwt.verify(
-    //   localStorage.getItem("param"),
-    //   config.login_secret.key
-    // );
-    console.log("query string",this.props.location.search)
-    const value=queryString.parse(this.props.location.search);
-    const id=value.id;
-    console.log('token id',id)//123
+    const decoded_id = jwt.verify(
+      localStorage.getItem("param"),
+      config.login_secret.key
+    );
+    // console.log("query string",this.props.location.search)
+    // const value=queryString.parse(this.props.location.search);
+    // const id=value.id;
+    // console.log('token id',id)//123
 
     let options = {
       method: "POST",
@@ -25,8 +25,8 @@ class Timeline extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      // body: JSON.stringify({ id: decoded_id.param }),
-      body: JSON.stringify({ id: id }),
+      body: JSON.stringify({ id: decoded_id.param }),
+      // body: JSON.stringify({ id: id }),
     };
     fetch("http://localhost:8080/showVideos", options)
       .then((res) => {

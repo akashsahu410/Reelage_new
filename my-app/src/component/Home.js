@@ -39,7 +39,7 @@ class Home extends React.Component{
                       <div class="bnnr-btn">
                      
                         <Link class="cmmn-btn app" to="/login"><i class="fa fa-plus" aria-hidden="true"></i> Apply Now</Link>
-                        <a class="cmmn-btn lve" href="javascript:void(0)">Live for entertainment</a>
+                        <a class="cmmn-btn lve" href="javascript:void(0);">Live for entertainment</a>
                       </div>
                     </div>
                   </div>

@@ -1,11 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect, Link } from "react-router-dom";
-import axios from "axios";
 import jwt from "jsonwebtoken";
-import queryString from 'query-string'
+import queryString from "query-string";
 import config from "./config.js";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 class Timeline extends React.Component {
   state = {
@@ -14,6 +11,8 @@ class Timeline extends React.Component {
     image: "",
     preview: "",
     video: "",
+    open_photo_model:"",
+    open_video_model:""
   };
   initialstate = {
     id: "",
@@ -21,37 +20,55 @@ class Timeline extends React.Component {
     image: "",
     preview: "",
     video: "",
+    open_photo_model:"",
+    open_video_model:""
   };
 
-  get_youtube_id=(url)=>{
-    let video_id = url.split('v=')[1];
-    let ampersandPosition = video_id.indexOf('&');
-    if(ampersandPosition != -1) {
+  get_youtube_id = (url) => {
+    let video_id = url.split("v=")[1];
+    let ampersandPosition = video_id.indexOf("&");
+    if (ampersandPosition != -1) {
       video_id = video_id.substring(0, ampersandPosition);
     }
-    return video_id 
-  }
+    return video_id;
+  };
   changedata = (e) => {
-    if (e.target.name === "video"){
-      let video_id = this.get_youtube_id(e.target.value)
-      this.setState({ [e.target.name]:  'https://www.youtube.com/embed/'+video_id});
-    }
-    else{
+    if (e.target.name === "video") {
+      let video_id = this.get_youtube_id(e.target.value);
+      this.setState({
+        [e.target.name]: "https://www.youtube.com/embed/" + video_id,
+      });
+    } else {
       this.setState({ [e.target.name]: e.target.value.toLowerCase() });
     }
   };
-
-  componentDidMount=()=> {
-    // const decoded_id = jwt.verify(
-    //   localStorage.getItem("param"),
-    //   config.login_secret.key
-    // );
-    const value=queryString.parse(this.props.location.search);
-    const id=value.id;
-    console.log('token id',id)//123
-    // this.setState({ id: decoded_id.param });
-    this.setState({ id: id });
+  // photo model
+  openPhotoModal = ()=>{
+    this.setState({open_photo_model:"in"})
   }
+  closePhotoModal = ()=>{
+    this.setState({open_photo_model:""})
+  }
+
+  // video model
+  openVideoModal = ()=>{
+    this.setState({open_video_model:"in"})
+  }
+  closeVideoModal = ()=>{
+    this.setState({open_video_model:""})
+  }
+
+  componentDidMount = () => {
+    const decoded_id = jwt.verify(
+      localStorage.getItem("param"),
+      config.login_secret.key
+    );
+    // const value=queryString.parse(this.props.location.search);
+    // const id=value.id;
+    // console.log('timeline token id',id)//123
+    this.setState({ id: decoded_id.param });
+    // this.setState({ id: id });
+  };
 
   onChangeHandler = (event) => {
     this.setState({
@@ -85,7 +102,7 @@ class Timeline extends React.Component {
       })
       .then((data) => {
         console.log("data", data.status);
-        toast(data.msg);
+        // toast(data.msg);
         this.setState(this.initialstate);
       })
       .catch((err) => {
@@ -93,39 +110,37 @@ class Timeline extends React.Component {
       });
   };
 
-  
   //   to upload the post
   upload_post = (e) => {
     e.preventDefault();
-    if (this.state.video !== "" || this.state.message !== ""){
-    let options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(this.state),
-    };
-    fetch(`http://localhost:8080/upload_post`, options)
-      .then((res) => {
-        //console.log("response",res)
-        return res.json();
-      })
-      .then((data) => {
-        if (data.status) {
-          toast(data.msg);
-          console.log(data.msg);
-          this.setState(this.initialstate);
-        } else {
-          toast("Upload Post failure");
-        }
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
-    }
-    else{
-      toast("Empty Data");
+    if (this.state.video !== "" || this.state.message !== "") {
+      let options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.state),
+      };
+      fetch(`http://localhost:8080/upload_post`, options)
+        .then((res) => {
+          //console.log("response",res)
+          return res.json();
+        })
+        .then((data) => {
+          if (data.status) {
+            // toast(data.msg);
+            console.log(data.msg);
+            this.setState(this.initialstate);
+          } else {
+            // toast("Upload Post failure");
+          }
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
+    } else {
+      // toast("Empty Data");
     }
   };
   render() {
@@ -133,7 +148,7 @@ class Timeline extends React.Component {
       <div>
         {/* <!-- Upload Photo modal --> */}
         <div
-          className="modal fade"
+          className={`modal fade ${this.state.open_photo_model}`}
           id="uploadpicModal"
           tabindex="-1"
           role="dialog"
@@ -162,7 +177,7 @@ class Timeline extends React.Component {
                     />
                   </label>
 
-                  <a className="add-more" href="#">
+                  <a className="add-more" href="javascript:void(0);">
                     <span className="uplod-icn">
                       <i className="fa fa-cloud-upload" aria-hidden="true"></i>
                     </span>
@@ -172,12 +187,12 @@ class Timeline extends React.Component {
                   <div className="upload-img-icn">
                     <a
                       className="cmmn-btn fllw"
-                      href="#"
+                      href="javascript:void(0);"
                       onClick={this.onFileUpload}
                     >
                       Upload
                     </a>
-                    <a className="cmmn-btn msg" href="#">
+                    <a className="cmmn-btn msg" href="javascript:void(0);" onClick={this.closePhotoModal}>
                       Cancel
                     </a>
                   </div>
@@ -193,11 +208,10 @@ class Timeline extends React.Component {
             </div>
           </div>
         </div>
-
-
+        
 
         <div
-          className="modal fade"
+          className={`modal fade ${this.state.open_video_model}`}
           id="uploadvideoModal"
           tabindex="-1"
           role="dialog"
@@ -216,26 +230,24 @@ class Timeline extends React.Component {
                 <h4 className="modal-title">Upload Video</h4>
               </div>
               <div className="modal-body uploadMdl-body">
-                    <input type="text" name="video" onChange = {this.changedata}/>
-                  
-                  <div className="upload-img-icn">
-                    <a
-                      className="cmmn-btn fllw"
-                      href="#"
-                      onClick={this.upload_post}
-                    >
-                      Upload
-                    </a>
-                    <a className="cmmn-btn msg" href="#">
-                      Cancel
-                    </a>
-                  </div>
-               
+                <input type="text" name="video" onChange={this.changedata} />
+
+                <div className="upload-img-icn">
+                  <a
+                    className="cmmn-btn fllw"
+                    href="javascript:void(0);"
+                    onClick={this.upload_post}
+                  >
+                    Upload
+                  </a>
+                  <a className="cmmn-btn msg" href="javascript:void(0);"  onClick={this.closeVideoModal}>
+                    Cancel
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
 
         <section class="profile-sec wrapper">
           <div class="container">
@@ -278,7 +290,7 @@ class Timeline extends React.Component {
                                 <li>
                                   <a
                                     href="#uploadpicModal"
-                                    onClick={this.upload}
+                                    onClick={this.openPhotoModal}
                                     data-toggle="modal"
                                   >
                                     <i
@@ -289,7 +301,11 @@ class Timeline extends React.Component {
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="#uploadvideoModal" data-toggle="modal">
+                                  <a
+                                    href="#uploadvideoModal"
+                                    data-toggle="modal"
+                                    onClick={this.openVideoModal}
+                                  >
                                     <i
                                       class="fa fa-video-camera"
                                       aria-hidden="true"

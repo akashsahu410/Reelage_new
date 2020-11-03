@@ -195,7 +195,7 @@ app.post("/registerwithlogin", async (req, res) => {
       password: req.body.PASSWORD,
       total_competition: "0",
       user_banner_img: "",
-      user_img: "",
+      user_img: req.body.IMAGE,
       user_status: 1,
       verify_status: "1",
       about_me:""
@@ -206,14 +206,19 @@ app.post("/registerwithlogin", async (req, res) => {
       .add(data)
       .then((docRef) => {
         const id = docRef.id;
-        const name = req.body.NAME;
+        res.json({
+          status: true,
+          id:id
+        });
       });
-    res.json({
-      status: true,
-    });
+    
   } else {
-    res.json({
-      status: false,
+    snapshot.forEach((doc) => {
+      console.log("inside fetch info ",doc.id, " => ", doc.data());
+      res.json({
+        status: false,
+      id:doc.id
+      });
     });
   }
 });

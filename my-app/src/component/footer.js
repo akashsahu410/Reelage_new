@@ -2,15 +2,6 @@ import React from 'react'
 import {Link} from 'react-router-dom';
 class Footer extends React.Component{
 
-  state={
-    username:""
-  }
-
-  changedata=(e)=>{
-    this.setState({[e.target.name]:e.target.value.toLowerCase()})
-    console.log(this.state.username)
-  }
-
   render(){
     return(
       <div>
@@ -77,6 +68,7 @@ class Footer extends React.Component{
       </div>
     </div>
   </footer>
+  
   </div>
       )
   }

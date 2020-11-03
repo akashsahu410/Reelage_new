@@ -10,6 +10,7 @@ import About from "./about";
 import Video from "./video";
 import Photos from "./photos";
 import Events from "./events";
+import ChangeUserPassword from "./change_user_password";
 import Loading from "./loading";
 
 
@@ -58,12 +59,14 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    // const decoded_id = jwt.verify(
-    //   localStorage.getItem("param"),
-    //   config.login_secret.key
-    // );
-    let fetch_url = window.location.href;
-    let res = fetch_url.split("=");
+    const decoded_id = jwt.verify(
+      localStorage.getItem("param"),
+      config.login_secret.key
+    );
+    // console.log("this.props",this.props.location.state)
+    // let fetch_url = window.location.href;
+    // let result = fetch_url.split("=");
+    // console.log("result",result)
 
     let options = {
       method: "POST",
@@ -71,8 +74,8 @@ class Profile extends React.Component {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: res[1] }),
-      // body: JSON.stringify({ id: decoded_id.param }),
+      // body: JSON.stringify({ id: result[1] }),
+      body: JSON.stringify({ id: decoded_id.param }),
     };
     fetch("http://localhost:8080/fetchUserInfo", options)
       .then((res) => {
@@ -81,7 +84,7 @@ class Profile extends React.Component {
       })
       .then((data) => {
         console.log("data", data.data);
-        this.setState({ id: res[1],name:data.data.name,followers:data.data.no_followers,following:data.data.no_following,user_img:data.data.user_img,
+        this.setState({ id: decoded_id.param,name:data.data.name,followers:data.data.no_followers,following:data.data.no_following,user_img:data.data.user_img,
         posts:data.data.no_post,banner_img:data.data.user_banner_img});
       })
       .catch((err) => {
@@ -94,28 +97,32 @@ class Profile extends React.Component {
   check = (e) => {
     // document.documentElement.scrollTop = 0;
     console.log("feth id",this.state)
-    this.props.history.push(`/profile/${e.target.name}?id=${this.state.id}`);
+    // this.props.history.push(`/profile/${e.target.name}?id=${this.state.id}`);
+    this.props.history.push(`/profile/${e.target.name}`);
 
-    let new_obj = {}
+    // let new_obj = {}
 
-    let tabs_arr = ['timeline','about','photos','video','events']
-    for (var [key, value] of Object.entries(this.state)) {
-      if(key === e.target.name){
-        new_obj[key] = "active"
-      }
-      else if(tabs_arr.includes(key)){
-        new_obj[key] = ""
-      }
-    }
-    console.log(new_obj)
-    this.setState(new_obj);
+    // let tabs_arr = ['timeline','about','photos','video','events']
+    // for (var [key, value] of Object.entries(this.state)) {
+    //   if(key === e.target.name){
+    //     new_obj[key] = "active"
+    //   }
+    //   else if(tabs_arr.includes(key)){
+    //     new_obj[key] = ""
+    //   }
+    //   else{
+    //     new_obj[key] = this.state[key]
+    //   }
+    // }
+    // console.log(new_obj)
+    // this.setState(new_obj);
   };
 
   render() {
     return (
       <div>
         <HeaderInn />
-        <section class="profile-sec wrapper pd-50">
+        <section class="profile-sec wrapper">
           <div class="container">
             <div class="profle-banner">
               <div class="row">
@@ -146,12 +153,12 @@ class Profile extends React.Component {
                           <a
                             class="fancybox"
                             rel="ligthbox"
-                            href={this.state.user_img === "" ? "/images/nora.jpg" : `http://localhost:8080/${this.state.user_img}`}
+                            href={this.state.user_img === "" ? "/images/nora.jpg" : (this.state.user_img.search("googleusercontent") ? this.state.user_img : `http://localhost:8080/${this.state.user_img}`)}
                           >
                             <img
                               class="img-responsive"
                               alt=""
-                              src={this.state.user_img === "" ? "/images/nora.jpg" : `http://localhost:8080/${this.state.user_img}`}
+                              src={this.state.user_img === "" ? "/images/nora.jpg" : (this.state.user_img.search("googleusercontent") ? this.state.user_img : `http://localhost:8080/${this.state.user_img}`)}
                             />
                           </a>
                         </div>
@@ -293,6 +300,10 @@ class Profile extends React.Component {
             <PrivateRoute
               path={`${this.props.match.url}/events`}
               component={Events}
+            />
+            <PrivateRoute
+              path={`${this.props.match.url}/change_password`}
+              component={ChangeUserPassword}
             />
           </Switch>
         </Suspense>
